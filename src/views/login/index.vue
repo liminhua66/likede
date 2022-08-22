@@ -130,16 +130,20 @@ export default {
           clientToken: this.clientToken
         }
         const res = await login(data)
+        console.log(res)
+        this.$store.commit('user/setToken', res.data.token)
         this.codeRight = res.data.success
         if (this.codeRight) {
           // console.log(res)
+          this.$message.success(res.data.msg)
           this.$router.push('/')
         } else {
           this.$message.error(res.data.msg)
         }
-        this.loading = false
       } catch (error) {
         console.log(error)
+      } finally {
+        this.loading = false
       }
     },
     // 刷新验证码
